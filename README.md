@@ -1,0 +1,2 @@
+# EmployeeMenagmentApp
+.net core app
