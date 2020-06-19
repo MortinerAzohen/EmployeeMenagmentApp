@@ -32,5 +32,20 @@ namespace MyApp.Controllers
             };
             return View(homeDetailsViewModel);
         }
+        [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Employee emp)
+        {
+            if(ModelState.IsValid)
+            {
+            Employee newEmployee =_empRepository.Add(emp);
+            return RedirectToAction("details", new { id = newEmployee.ID });
+            }
+            return View();
+        }
     }
 }
