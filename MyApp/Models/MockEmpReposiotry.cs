@@ -26,6 +26,16 @@ namespace MyApp.Models
             return employee;
         }
 
+        public Employee Delete(int id)
+        {
+            Employee emp = _employeeList.FirstOrDefault(e => e.ID == id);
+            if (emp != null)
+            {
+                _employeeList.Remove(emp);
+            }
+            return emp;
+        }
+
         public IEnumerable<Employee> employeesGetAll()
         {
             return _employeeList;
@@ -34,6 +44,19 @@ namespace MyApp.Models
         public Employee GetEmployee(int Id)
         {
             Employee emp = _employeeList.FirstOrDefault(e => e.ID == Id);
+            return emp;
+        }
+
+        public Employee Upadate(Employee employeeChanges)
+        {
+            Employee emp = _employeeList.FirstOrDefault(e => e.ID == employeeChanges.ID);
+            if (emp != null)
+            {
+                emp.Name = employeeChanges.Name;
+                emp.Surname = employeeChanges.Surname;
+                emp.Email = employeeChanges.Email;
+                emp.Departmennt = employeeChanges.Departmennt;
+            }
             return emp;
         }
     }

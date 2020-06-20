@@ -3,4 +3,7 @@
     border-width:2px;
     border-color:dimgrey;
 }
-
+.imageThumbnail{
+    height: 200px;
+    width: auto;
+}
