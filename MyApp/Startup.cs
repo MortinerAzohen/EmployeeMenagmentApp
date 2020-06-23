@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using MyApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyApp
 {
@@ -30,7 +31,8 @@ namespace MyApp
         {
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("EmpDbConnection")));
-
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>();
             services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddScoped<IEmployeRepository, SQLEmployeeRepository>();
         }
@@ -42,9 +44,13 @@ namespace MyApp
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
             app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
