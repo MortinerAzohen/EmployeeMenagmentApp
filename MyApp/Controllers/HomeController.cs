@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using MyApp.ViewModels;
 
 namespace MyApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IEmployeRepository _empRepository;
@@ -22,12 +24,13 @@ namespace MyApp.Controllers
             this.hostingEnvironment = hostingEnvironment;
         }
 
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var model = _empRepository.employeesGetAll();
             return View(model);
         }
-
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
             //throw new Exception("this is error msg");
@@ -45,6 +48,7 @@ namespace MyApp.Controllers
             return View(homeDetailsViewModel);
         }
         [HttpGet]
+        [Authorize]
         public ViewResult Create()
         {
             return View();

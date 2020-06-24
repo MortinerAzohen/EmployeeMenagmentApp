@@ -14,6 +14,9 @@ using MyApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace MyApp
 {
@@ -31,9 +34,13 @@ namespace MyApp
         {
             services.AddDbContextPool<AppDbContext>(
                 options => options.UseSqlServer(_config.GetConnectionString("EmpDbConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
-            services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
+            services.AddMvc(option => {
+                option.EnableEndpointRouting = false;
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                option.Filters.Add(new AuthorizeFilter(policy));
+                }).AddXmlSerializerFormatters();
             services.AddScoped<IEmployeRepository, SQLEmployeeRepository>();
         }
 
