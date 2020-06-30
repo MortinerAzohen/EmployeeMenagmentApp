@@ -3,7 +3,9 @@
 @{ 
     ViewBag.Title = "All Roles";
 }
-
+<a  asp-controller="Administration" asp-action="CreateRole" class="btn btn-primary" style="width:auto">
+        Add new role.
+</a>
 @if (Model.Any())
 {
 
@@ -17,8 +19,10 @@
             Role Name: @role.Name
         </div>
         <div class=" card-footer">
-            <a class="btn btn-primary" asp-controller="Administration" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <form  asp-action="DeleteRole" asp-route-id="@role.Id">
+                <a class="btn btn-primary" asp-controller="Administration" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </div>
     </div>
     }
