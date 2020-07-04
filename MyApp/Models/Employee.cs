@@ -23,5 +23,6 @@ namespace MyApp.Models
             get { return Surname+", "+Name; }
         }
         public string PhotoPath { get; set; }
+        public Depo Depo { get; set; }
     }
 }

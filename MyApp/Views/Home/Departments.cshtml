@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Depo>
+@{ 
+    ViewBag.Title = "Depratment List";
+}
+<div class="card-deck">
+    @foreach(var depo in Model)
+    {
+        <div class="card" style=" min-width=18rem; max-width:30.5%;">
+            <div class="card-header">
+                <h3>@depo.Name</h3>
+            </div>
+            <img class="card-img-top imageThumbnail"src="@depo.PhotoPath" asp-append-version="true"/>
+        </div>
+    }
+</div>

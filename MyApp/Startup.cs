@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using MyApp.Models.Department;
 
 namespace MyApp
 {
@@ -42,6 +43,7 @@ namespace MyApp
                 option.Filters.Add(new AuthorizeFilter(policy));
                 }).AddXmlSerializerFormatters();
             services.AddScoped<IEmployeRepository, SQLEmployeeRepository>();
+            services.AddScoped<IDepartmentRepository, SQLDepartmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

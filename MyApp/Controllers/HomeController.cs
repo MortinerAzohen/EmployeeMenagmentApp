@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Models;
+using MyApp.Models.Department;
 using MyApp.ViewModels;
 
 namespace MyApp.Controllers
@@ -17,11 +18,13 @@ namespace MyApp.Controllers
     {
         private readonly IEmployeRepository _empRepository;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IDepartmentRepository _departmentRepository;
 
-        public HomeController(IEmployeRepository employeRepository, IHostingEnvironment hostingEnvironment)
+        public HomeController(IEmployeRepository employeRepository, IHostingEnvironment hostingEnvironment, IDepartmentRepository departmentRepository)
         {
             _empRepository = employeRepository;
             this.hostingEnvironment = hostingEnvironment;
+            _departmentRepository = departmentRepository;
         }
 
         [AllowAnonymous]
@@ -135,6 +138,16 @@ namespace MyApp.Controllers
                 return RedirectToAction("details", new { id = newEmployee.ID });
             }
             return View();
+        }
+        public IActionResult Delete(int Id)
+        {
+            _empRepository.Delete(Id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Departments()
+        {
+            var model = _departmentRepository.GetAllDepartments();
+            return View(model);
         }
     }
 }
