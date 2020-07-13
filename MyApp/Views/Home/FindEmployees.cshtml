@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Employee>
+﻿@model IQueryable<Employee>
+
 @{
     ViewBag.Title = "Employee List";
 }
-
 <div class="card-deck">
     @foreach (var emp in Model)
     {

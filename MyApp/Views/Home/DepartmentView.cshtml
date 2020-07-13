@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Employee>
+﻿@model DepartmentViewModel
 @{
-    ViewBag.Title = "Employee List";
+    ViewBag.Title = "Department Employee List";
 }
 
 <div class="card-deck">
-    @foreach (var emp in Model)
+    @foreach (var emp in Model.Depo.Employees)
     {
         var photoPath = "~/images/" + (emp.PhotoPath ?? "pobrane.png");
-        <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+        <div class="card mb-3 mx-3" style="min-width: 18rem; max-width:30.5%;">
             <div class="card-header">
                 <h3>@emp.FullName</h3>
             </div>

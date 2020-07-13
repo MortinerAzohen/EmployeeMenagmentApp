@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyApp.Migrations;
 using MyApp.Models;
 using MyApp.Models.Department;
 using MyApp.ViewModels;
@@ -33,6 +34,19 @@ namespace MyApp.Controllers
             var model = _empRepository.employeesGetAll();
             return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ViewResult Index(string searchString = null)
+        {
+            ViewData["GetEmployees"] = searchString;
+            var empQuery = _empRepository.employeesGetAll();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                empQuery = _departmentRepository.FindEmployees(searchString);
+            }
+            return View(empQuery);
+        }
+
         [AllowAnonymous]
         public ViewResult Details(int? id)
         {
@@ -76,11 +90,13 @@ namespace MyApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                int id = (int)model.Departmennt;
                 Employee employee = _empRepository.GetEmployee(model.Id);
                 employee.Name = model.Name;
                 employee.Surname = model.Surname;
                 employee.Email = model.Email;
                 employee.Departmennt = model.Departmennt;
+                employee.Depo = _departmentRepository.FindDepartment(id);
 
                 if (model.Photos != null && model.Photos.Count > 0)
                 {
@@ -124,14 +140,15 @@ namespace MyApp.Controllers
             if(ModelState.IsValid)
             {
                 string uniqueFileName = ProcessUploadedFile(model);
-
+                int id = (int)model.Departmennt;
                 Employee newEmployee = new Employee
                 {
                     Name = model.Name,
                     Email = model.Email,
                     Surname = model.Surname,
                     Departmennt = model.Departmennt,
-                    PhotoPath = uniqueFileName
+                    PhotoPath = uniqueFileName,
+                    Depo = _departmentRepository.FindDepartment(id)
                 };
                 _empRepository.Add(newEmployee);
 
@@ -144,10 +161,24 @@ namespace MyApp.Controllers
             _empRepository.Delete(Id);
             return RedirectToAction("Index");
         }
+        [AllowAnonymous]
         public IActionResult Departments()
         {
             var model = _departmentRepository.GetAllDepartments();
             return View(model);
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult DepartmentView(int id)
+        {
+            //throw new Exception("this is error msg");
+            Depo depo = _departmentRepository.GetDepartment(id);
+            DepartmentViewModel model = new DepartmentViewModel
+            {
+                Depo = depo
+            };
+            return View(model);
+        }
+
     }
 }

@@ -10,6 +10,6 @@ namespace MyApp.Models
         None,
         Hr,
         IT,
-        Payroll
+        Finance
     }
 }

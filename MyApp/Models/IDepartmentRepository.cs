@@ -9,8 +9,7 @@ namespace MyApp.Models.Department
     {
         Depo GetDepartment(int Id);
         IEnumerable<Depo> GetAllDepartments();
-        Depo AddEmployeeToDepartment( int Id, Employee emp);
-        Depo RemoveEmployeeFromDepartment(int Id, int empId);
-        List<Employee> FindEmployeeByName(string name);
+        IEnumerable<Employee> FindEmployees(string name);
+        Depo FindDepartment(int id);
     }
 }

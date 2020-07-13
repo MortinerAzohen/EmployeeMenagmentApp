@@ -25,5 +25,7 @@ namespace MyApp.ViewModels
             get { return Surname + ", " + Name; }
         }
         public List<IFormFile> Photos { get; set; }
+        public Depo Depo { get; set; }
+
     }
 }

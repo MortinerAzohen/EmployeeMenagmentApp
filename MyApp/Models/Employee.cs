@@ -24,5 +24,6 @@ namespace MyApp.Models
         }
         public string PhotoPath { get; set; }
         public Depo Depo { get; set; }
+
     }
 }

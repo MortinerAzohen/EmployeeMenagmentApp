@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyApp.Models.Department;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,15 @@ namespace MyApp.Models
             this.context = context;
         }
 
-        public Depo AddEmployeeToDepartment(int Id, Employee emp)
-        {
-            var depo = context.Depos.Find(Id);
-            depo.Employees.Add(emp);
-            context.Depos.Update(depo);
-            context.SaveChanges();
-            return depo;
-        }
 
-        public List<Employee> FindEmployeeByName(string name)
+        public IEnumerable<Employee> FindEmployees(string userInstertedValue)
         {
-            throw new NotImplementedException();
+            var input = userInstertedValue.ToLower();
+
+            var employees = context.Employees.Where(e => e.Email.ToLower() == input ||
+                                         e.Name.ToLower() == input ||
+                                         e.Surname.ToLower() == input);
+            return employees;
         }
 
         public IEnumerable<Depo> GetAllDepartments()
@@ -35,19 +33,19 @@ namespace MyApp.Models
             return context.Depos;
         }
 
-        public Depo GetDepartment(int Id)
+        public Depo GetDepartment(int id)
         {
-            return context.Depos.Find(Id);
-        }
-
-        public Depo RemoveEmployeeFromDepartment(int Id, int empId)
-        {
-            var depo = context.Depos.Find(Id);
-            var emp = context.Employees.Find(empId);
-            depo.Employees.Remove(emp);
-            context.Depos.Update(depo);
-            context.SaveChanges();
+            var depo = context.Depos
+                .Include(d => d.Employees)
+                .Single(d => d.Id == id);
             return depo;
+        }
+        public Depo FindDepartment(int id)
+        {
+            var depo = context.Depos
+                .Single(d => d.Id == id);
+            return depo;
+                
         }
     }
 }

@@ -5,11 +5,12 @@
 <div class="card-deck">
     @foreach(var depo in Model)
     {
-        <div class="card" style=" min-width=18rem; max-width:30.5%;">
-            <div class="card-header">
+        <a asp-action="DepartmentView" asp-controller="home" asp-route-id="@depo.Id" class="card m-3" style="text-align: center; text-decoration: none; min-width: 18rem; max-width: 30.5%;">
+            <div class="card-header" >
                 <h3>@depo.Name</h3>
             </div>
+
             <img class="card-img-top imageThumbnail"src="@depo.PhotoPath" asp-append-version="true"/>
-        </div>
+        </a>
     }
 </div>

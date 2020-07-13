@@ -22,7 +22,7 @@ namespace MyApp.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
             modelBuilder.Entity<Depo>()
-                .HasMany(d => d.Employees)
+                .HasMany<Employee>(d => d.Employees)
                 .WithOne(e => e.Depo);
         }
     }
