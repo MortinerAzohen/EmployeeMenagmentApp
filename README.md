@@ -1,7 +1,8 @@
 # EmployeeMenagmentApp
 .net core app
 
-Simple app where u can add and remove users and employees.Using .net core MVC, entity framework core, identity and authorisation.
+The main reason for creating this project was to get acquainted with .net core technology.
+Simple app where u can add and remove users and employees.Using .net core MVC, entity framework core, identity and authorisation. 
 ![alt text](https://github.com/MortinerAzohen/EmployeeMenagmentApp/blob/master/pics/01.PNG?raw=true)
 Login page, u can login into your account. As a user you can edit or add new employees.
 ![alt text](https://github.com/MortinerAzohen/EmployeeMenagmentApp/blob/master/pics/02.PNG?raw=true)
